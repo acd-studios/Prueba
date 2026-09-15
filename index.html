@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBER LABS // 10 MODELOS INTERACTIVOS HTML+JS</title>
+
+    <!-- Google Fonts for Cyberpunk Aesthetic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+
+    <!-- JSZip for dynamic ZIP export -->
+    <script src="jszip.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Fullscreen Interactive Canvas Background -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <!-- Glowing Custom Cursor FX -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-glow"></div>
+
+    <!-- CRT Scanline Overlay -->
+    <div class="scanlines"></div>
+
+    <!-- Spacebar Toggle Hint Floating Badge -->
+    <div id="space-hint" class="space-hint-badge">
+        <span>PULSA <kbd>[ ESPACIO ]</kbd> PARA MOSTRAR / OCULTAR INTERFAZ</span>
+    </div>
+
+    <!-- HUD Overlay Corner Indicators -->
+    <div id="hud-overlay" class="hud-layer">
+        <div class="hud-corner top-left">
+            <span class="status-indicator"></span>
+            <span>MODO: <span id="hud-model-title">// 1. MATRIX CONTROL DECK</span></span>
+        </div>
+        <div class="hud-corner top-right">
+            <span>MODELOS: 10/10 ACTIVO</span>
+        </div>
+        <div class="hud-corner bottom-left">
+            <span>PARTÍCULAS / ELEMENTOS: <span id="hud-particle-count">1200</span> // FPS: 60</span>
+        </div>
+        <div class="hud-corner bottom-right">
+            <span>CAMPO CURSOR: <span id="hud-cursor-mode-text">ACTIVO</span></span>
+        </div>
+    </div>
+
+    <!-- Main UI Container -->
+    <main id="main-ui" class="terminal-wrapper">
+        <div class="terminal-card">
+
+            <!-- Top Header & Navigation Tabs -->
+            <div class="hub-header">
+                <div class="system-badge">
+                    <span class="badge-dot"></span>
+                    CYBER LABS // ULTRALAB V5.0
+                </div>
+                <h1 class="terminal-title">GALERÍA DE MODELOS INTERACTIVOS</h1>
+                <p class="terminal-subtitle">
+                    Selecciona uno de los 10 modelos canvas interactivos. Explora su comportamiento físico, ajusta sus parámetros en tiempo real o descarga el paquete standalone en ZIP.
+                </p>
+            </div>
+
+            <!-- Model Selector Grid (10 Models) -->
+            <div class="model-selector-container">
+                <div class="model-selector-label">// SELECCIONAR MODELO (10 DISPONIBLES):</div>
+                <div class="model-grid">
+                    <button class="model-card-btn active" data-model-id="1">
+                        <span class="model-num">01</span>
+                        <span class="model-info">
+                            <span class="model-title">MATRIX DECK</span>
+                            <span class="model-desc">Campo repelente Katakana</span>
+                        </span>
+                    </button>
+                    <button class="model-card-btn" data-model-id="2">
+                        <span class="model-num">02</span>
+                        <span class="model-info">
+                            <span class="model-title">NEON GRID</span>
+                            <span class="model-desc">Malla 3D Cyberpunk</span>
+                        </span>
+                    </button>
+                    <button class="model-card-btn" data-model-id="3">
+                        <span class="model-num">03</span>
+                        <span class="model-info">
+                            <span class="model-title">BLACK HOLE</span>
+                            <span class="model-desc">Disco de acreción y gravedad</span>
+                        </span>
+                    </button>
+                    <button class="model-card-btn" data-model-id="4">
+                        <span class="model-num">04</span>
+                        <span class="model-info">
+                            <span class="model-title">3D POLYHEDRON</span>
+                            <span class="model-desc">Poliedros wireframe 3D</span>
+                        </span>
+                    </button>
+                    <button class="model-card-btn" data-model-id="5">
+                        <span class="model-num">05</span>
+                        <span class="model-info">
+                            <span class="model-title">FLUID PARTICLES</span>
+                            <span class="model-desc">Física líquida metaballs</span>
+                        </span>
+                    </button>
+                    <button class="model-card-btn" data-model-id="6">
+                        <span class="model-num">06</span>
+                        <span class="model-info">
+                            <span class="model-title">WARP STARFIELD</span>
+                            <span class="model-desc">Viaje hiperespacial 3D</span>
+                        </span>
+                    </button>
+                    <button class="model-card-btn" data-model-id="7">
+                        <span class="model-num">07</span>
+                        <span class="model-info">
+                            <span class="model-title">FIREFLIES DUST</span>
+                            <span class="model-desc">Luciérnagas y polvo místico</span>
+                        </span>
+                    </button>
+                    <button class="model-card-btn" data-model-id="8">
+                        <span class="model-num">08</span>
+                        <span class="model-info">
+                            <span class="model-title">WAVE VISUALIZER</span>
+                            <span class="model-desc">Sintetizador de ondas cian</span>
+                        </span>
+                    </button>
+                    <button class="model-card-btn" data-model-id="9">
+                        <span class="model-num">09</span>
+                        <span class="model-info">
+                            <span class="model-title">QUANTUM NODE</span>
+                            <span class="model-desc">Red constelación cuántica</span>
+                        </span>
+                    </button>
+                    <button class="model-card-btn" data-model-id="10">
+                        <span class="model-num">10</span>
+                        <span class="model-info">
+                            <span class="model-title">GLITCH DIGITAL RAIN</span>
+                            <span class="model-desc">Lluvia ASCII con distorsión</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dynamic Control Deck for Active Model -->
+            <div id="active-control-deck" class="control-deck">
+                <!-- Controls injected dynamically by app.js based on active model -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-group">
+                <button id="btn-listo" class="cyber-btn primary">¡MODO PANTALLA COMPLETA! (OCULTAR UI)</button>
+                <button id="btn-download" class="cyber-btn download">DESCARGAR MODELO ACTUAL (.ZIP)</button>
+            </div>
+
+            <div class="terminal-footer-info">
+                <div>CYBER LABS: <span>v5.0-ULTRALAB</span></div>
+                <div>TECLA RÁPIDA: <span>[ESPACIO] OCULTAR/MOSTRAR MENU</span></div>
+                <div>EXPORTACIÓN: <span>ZIP (HTML+CSS+JS)</span></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
