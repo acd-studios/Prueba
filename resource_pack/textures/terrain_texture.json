@@ -1,0 +1,14 @@
+{
+  "resource_pack_name": "elemental_rp",
+  "texture_name": "atlas.terrain",
+  "padding": 8,
+  "num_mip_levels": 4,
+  "texture_data": {
+    "elemental_ore": {
+      "textures": "textures/blocks/elemental_ore"
+    },
+    "elemental_altar": {
+      "textures": "textures/blocks/elemental_altar"
+    }
+  }
+}

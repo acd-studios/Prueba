@@ -1,0 +1,11 @@
+{
+  "format_version": "1.1.0",
+  "elemental:elemental_ore": {
+    "textures": "elemental_ore",
+    "sound": "stone"
+  },
+  "elemental:elemental_altar": {
+    "textures": "elemental_altar",
+    "sound": "stone"
+  }
+}

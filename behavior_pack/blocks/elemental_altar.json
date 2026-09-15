@@ -1,0 +1,23 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:block": {
+    "description": {
+      "identifier": "elemental:elemental_altar",
+      "menu_category": {
+        "category": "items",
+        "group": "itemGroup.name.item"
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 4.0
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 12.0
+      },
+      "minecraft:map_color": "#8A2BE2",
+      "minecraft:light_emission": 10,
+      "minecraft:unit_cube": {}
+    }
+  }
+}

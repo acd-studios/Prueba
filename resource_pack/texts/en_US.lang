@@ -1,0 +1,14 @@
+pack.name=Elemental & Artifacts RP
+pack.description=Resource Pack for Elemental & Artifacts Addon (v1.21+)
+
+item.elemental:inferno_wand=Inferno Wand
+item.elemental:frost_wand=Frost Wand
+item.elemental:storm_wand=Storm Wand
+item.elemental:voidblade=Voidblade
+item.elemental:elemental_core=Elemental Core
+
+tile.elemental:elemental_ore.name=Elemental Ore
+tile.elemental:elemental_altar.name=Elemental Altar
+
+entity.elemental:elemental_boss.name=Supreme Elemental Golem
+item.spawn_egg.entity.elemental:elemental_boss.name=Spawn Supreme Elemental Golem

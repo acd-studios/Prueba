@@ -1,0 +1,24 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:block": {
+    "description": {
+      "identifier": "elemental:elemental_ore",
+      "menu_category": {
+        "category": "nature",
+        "group": "itemGroup.name.ore"
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 3.0
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 10.0
+      },
+      "minecraft:map_color": "#20B2AA",
+      "minecraft:light_emission": 5,
+      "minecraft:unit_cube": {},
+      "minecraft:loot": "loot_tables/blocks/elemental_ore.json"
+    }
+  }
+}

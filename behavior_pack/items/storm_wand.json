@@ -1,0 +1,37 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:item": {
+    "description": {
+      "identifier": "elemental:storm_wand",
+      "menu_category": {
+        "category": "equipment",
+        "group": "itemGroup.name.sword"
+      }
+    },
+    "components": {
+      "minecraft:icon": {
+        "texture": "storm_wand"
+      },
+      "minecraft:display_name": {
+        "value": "Báculo de Tormenta (Storm Wand)"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:durability": {
+        "max_durability": 300
+      },
+      "minecraft:shooter": {
+        "ammunition": [
+          {
+            "item": "elemental:elemental_core",
+            "use_offhand": true,
+            "search_inventory": true,
+            "use_in_creative": true
+          }
+        ],
+        "projectile": "elemental:lightning_projectile",
+        "launch_power": 2.0
+      },
+      "minecraft:hand_equipped": true
+    }
+  }
+}

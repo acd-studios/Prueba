@@ -1,0 +1,14 @@
+pack.name=Elemental & Artifacts RP
+pack.description=Resource Pack para Elemental & Artifacts Addon (v1.21+)
+
+item.elemental:inferno_wand=Báculo de Fuego (Inferno Wand)
+item.elemental:frost_wand=Báculo de Hielo (Frost Wand)
+item.elemental:storm_wand=Báculo de Tormenta (Storm Wand)
+item.elemental:voidblade=Espada del Vacío (Voidblade)
+item.elemental:elemental_core=Núcleo Elemental
+
+tile.elemental:elemental_ore.name=Mena Elemental
+tile.elemental:elemental_altar.name=Altar Elemental
+
+entity.elemental:elemental_boss.name=Gólem Elemental Supremo
+item.spawn_egg.entity.elemental:elemental_boss.name=Generar Gólem Elemental Supremo

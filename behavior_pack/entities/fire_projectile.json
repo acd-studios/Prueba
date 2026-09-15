@@ -1,0 +1,32 @@
+{
+  "format_version": "1.16.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "elemental:fire_projectile",
+      "is_spawnable": false,
+      "is_summonable": true,
+      "is_experimental": false
+    },
+    "components": {
+      "minecraft:collision_box": {
+        "width": 0.25,
+        "height": 0.25
+      },
+      "minecraft:projectile": {
+        "on_hit": {
+          "impact_damage": {
+            "damage": 8,
+            "knockback": true,
+            "destroy_on_hit": true
+          },
+          "stick_in_ground": {},
+          "catch_fire": {}
+        },
+        "power": 1.8,
+        "gravity": 0.01,
+        "inertia": 0.99
+      },
+      "minecraft:physics": {}
+    }
+  }
+}

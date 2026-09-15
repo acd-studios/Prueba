@@ -1,0 +1,24 @@
+{
+  "format_version": "1.10.0",
+  "client_entity": {
+    "description": {
+      "identifier": "elemental:elemental_boss",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/elemental_boss"
+      },
+      "geometry": {
+        "default": "geometry.elemental_boss"
+      },
+      "render_controllers": [
+        "controller.render.elemental_boss"
+      ],
+      "spawn_egg": {
+        "texture": "elemental_core",
+        "texture_index": 0
+      }
+    }
+  }
+}

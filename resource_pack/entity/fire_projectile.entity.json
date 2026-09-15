@@ -1,0 +1,20 @@
+{
+  "format_version": "1.10.0",
+  "client_entity": {
+    "description": {
+      "identifier": "elemental:fire_projectile",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/items/fire_projectile"
+      },
+      "geometry": {
+        "default": "geometry.dragon_head"
+      },
+      "render_controllers": [
+        "controller.render.projectile"
+      ]
+    }
+  }
+}

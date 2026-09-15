@@ -1,0 +1,17 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Elemental & Artifacts RP",
+    "description": "Resource Pack para Elemental & Artifacts Addon (Minecraft 1.21+)",
+    "uuid": "8f4b1230-01a2-4c8d-9002-e28a1a31b002",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 21, 0]
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "8f4b1230-01a2-4c8d-9004-e28a1a31b004",
+      "version": [1, 0, 0]
+    }
+  ]
+}

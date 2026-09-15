@@ -1,0 +1,30 @@
+{
+  "resource_pack_name": "elemental_rp",
+  "texture_name": "atlas.items",
+  "texture_data": {
+    "inferno_wand": {
+      "textures": "textures/items/inferno_wand"
+    },
+    "frost_wand": {
+      "textures": "textures/items/frost_wand"
+    },
+    "storm_wand": {
+      "textures": "textures/items/storm_wand"
+    },
+    "voidblade": {
+      "textures": "textures/items/voidblade"
+    },
+    "elemental_core": {
+      "textures": "textures/items/elemental_core"
+    },
+    "fire_projectile": {
+      "textures": "textures/items/fire_projectile"
+    },
+    "ice_projectile": {
+      "textures": "textures/items/ice_projectile"
+    },
+    "lightning_projectile": {
+      "textures": "textures/items/lightning_projectile"
+    }
+  }
+}

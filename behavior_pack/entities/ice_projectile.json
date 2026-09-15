@@ -1,0 +1,35 @@
+{
+  "format_version": "1.16.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "elemental:ice_projectile",
+      "is_spawnable": false,
+      "is_summonable": true,
+      "is_experimental": false
+    },
+    "components": {
+      "minecraft:collision_box": {
+        "width": 0.25,
+        "height": 0.25
+      },
+      "minecraft:projectile": {
+        "on_hit": {
+          "impact_damage": {
+            "damage": 6,
+            "knockback": true,
+            "destroy_on_hit": true
+          },
+          "mob_effect": {
+            "effect": "slowness",
+            "duration": 5,
+            "amplifier": 2
+          }
+        },
+        "power": 1.6,
+        "gravity": 0.01,
+        "inertia": 0.99
+      },
+      "minecraft:physics": {}
+    }
+  }
+}
