@@ -6,6 +6,7 @@ item.elemental:frost_wand=Báculo de Hielo (Frost Wand)
 item.elemental:storm_wand=Báculo de Tormenta (Storm Wand)
 item.elemental:voidblade=Espada del Vacío (Voidblade)
 item.elemental:elemental_core=Núcleo Elemental
+item.elemental:boss_summoner=Invocador del Gólem Elemental
 
 tile.elemental:elemental_ore.name=Mena Elemental
 tile.elemental:elemental_altar.name=Altar Elemental

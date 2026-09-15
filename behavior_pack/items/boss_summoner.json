@@ -1,0 +1,24 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:item": {
+    "description": {
+      "identifier": "elemental:boss_summoner",
+      "menu_category": {
+        "category": "items",
+        "group": "itemGroup.name.rawMaterials"
+      }
+    },
+    "components": {
+      "minecraft:icon": {
+        "texture": "boss_summoner"
+      },
+      "minecraft:display_name": {
+        "value": "Invocador del Gólem Elemental"
+      },
+      "minecraft:max_stack_size": 16,
+      "minecraft:entity_placer": {
+        "entity": "elemental:elemental_boss"
+      }
+    }
+  }
+}

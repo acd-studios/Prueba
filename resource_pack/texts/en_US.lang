@@ -6,6 +6,7 @@ item.elemental:frost_wand=Frost Wand
 item.elemental:storm_wand=Storm Wand
 item.elemental:voidblade=Voidblade
 item.elemental:elemental_core=Elemental Core
+item.elemental:boss_summoner=Elemental Golem Summoner
 
 tile.elemental:elemental_ore.name=Elemental Ore
 tile.elemental:elemental_altar.name=Elemental Altar

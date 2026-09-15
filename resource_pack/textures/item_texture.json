@@ -17,6 +17,9 @@
     "elemental_core": {
       "textures": "textures/items/elemental_core"
     },
+    "boss_summoner": {
+      "textures": "textures/items/boss_summoner"
+    },
     "fire_projectile": {
       "textures": "textures/items/fire_projectile"
     },
