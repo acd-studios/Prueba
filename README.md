@@ -77,7 +77,17 @@ Una plataforma web modular y profesional para convertir vídeos 2D a vídeo 3D e
 
 ---
 
-## 🚀 Instalación y Despliegue
+## 🌐 Despliegue en Netlify / Servidor Remoto
+
+Si despliegas el Frontend estático en Netlify (por ejemplo, `melodious-sable-8775f0.netlify.app`):
+1. Despliega el Backend Python/FastAPI en una plataforma con soporte para ejecución de código y FFmpeg (Render, Railway, Fly.io, HuggingFace Spaces o VPS).
+2. En la interfaz web en Netlify, escribe la URL de tu backend en el campo de entrada ubicado en la esquina superior derecha:
+   `https://tu-backend.onrender.com`
+3. El frontend guardará automáticamente la URL en `localStorage` y redirigirá todas las peticiones API (`/api/upload`, `/api/preview`, `/api/jobs`) a tu servidor backend.
+
+---
+
+## 🚀 Instalación y Despliegue Local
 
 ### Requisitos Previos
 

@@ -23,6 +23,21 @@ document.addEventListener('DOMContentLoaded', () => {
         return apiBaseUrl ? `${apiBaseUrl}${path}` : path;
     }
 
+    async function safeParseJson(resp) {
+        const text = await resp.text();
+        if (!text || text.trim().length === 0) {
+            throw new Error(`El servidor no devolvió respuesta JSON (HTTP ${resp.status}). Si la web está alojada en Netlify, configura la URL de tu servidor backend en la casilla de la barra superior.`);
+        }
+        try {
+            return JSON.parse(text);
+        } catch (e) {
+            if (!resp.ok) {
+                throw new Error(`Error del servidor (HTTP ${resp.status}). Asegúrate de haber iniciado el backend FastAPI o introducido la URL completa de tu backend.`);
+            }
+            throw new Error(`Respuesta no válida del servidor. Asegúrate de configurar la URL del servidor API backend.`);
+        }
+    }
+
     // DEPTH CURVE STATE: array of [x, y] coordinates in [0..1] range
     let depthCurvePoints = [
         [0.0, 0.0],
@@ -240,11 +255,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (!resp.ok) {
-                const err = await resp.json();
-                throw new Error(err.detail || 'Error en la subida.');
+                const errData = await safeParseJson(resp).catch(e => ({ detail: e.message }));
+                throw new Error(errData.detail || `Error en la subida (HTTP ${resp.status})`);
             }
 
-            const data = await resp.json();
+            const data = await safeParseJson(resp);
             currentUploadedFilename = data.filename;
 
             // Probe metadata
@@ -278,6 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (resp.ok) {
+                await safeParseJson(resp);
                 sourceInfoCard.style.display = 'block';
                 infoFilename.textContent = originalName;
                 infoDuration.textContent = 'Calculando...';
@@ -342,11 +358,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (!resp.ok) {
-                const err = await resp.json();
-                throw new Error(err.detail || 'Error al generar la vista previa.');
+                const errData = await safeParseJson(resp).catch(e => ({ detail: e.message }));
+                throw new Error(errData.detail || 'Error al generar la vista previa.');
             }
 
-            currentPreviewData = await resp.json();
+            currentPreviewData = await safeParseJson(resp);
             renderPreviewMode();
             setGlobalStatus('Vista Previa Actualizada', 'ready');
 
@@ -403,11 +419,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (!resp.ok) {
-                const err = await resp.json();
-                throw new Error(err.detail || 'Error al iniciar el trabajo.');
+                const errData = await safeParseJson(resp).catch(e => ({ detail: e.message }));
+                throw new Error(errData.detail || 'Error al iniciar el trabajo.');
             }
 
-            const jobInfo = await resp.json();
+            const jobInfo = await safeParseJson(resp);
             currentJobId = jobInfo.job_id;
 
             // Start polling status
@@ -429,7 +445,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const resp = await fetch(getApiUrl(`/api/jobs/${jobId}`));
                 if (!resp.ok) return;
 
-                const job = await resp.json();
+                const job = await safeParseJson(resp);
                 updateJobUI(job);
 
                 if (job.status === 'COMPLETED') {

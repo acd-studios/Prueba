@@ -73,7 +73,6 @@ class VideoEngine:
         if metadata["width"] == 0 or metadata["height"] == 0:
             cap = cv2.VideoCapture(video_path)
             if cap.isOpened():
-                metadata["width"] = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
                 metadata["width"] = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
                 metadata["height"] = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
                 metadata["fps"] = cap.get(cv2.CAP_PROP_FPS) or 30.0
