@@ -1,0 +1,7 @@
+[build]
+  publish = "frontend"
+
+[[redirects]]
+  from = "/api/*"
+  to = ":splat"
+  status = 200

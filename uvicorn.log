@@ -17,3 +17,10 @@ INFO:     127.0.0.1:49950 - "POST /api/upload HTTP/1.1" 200 OK
 INFO:     127.0.0.1:49950 - "POST /api/preview HTTP/1.1" 200 OK
 INFO:     127.0.0.1:49950 - "POST /api/preview HTTP/1.1" 200 OK
 INFO:     127.0.0.1:49950 - "POST /api/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34064 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34064 - "GET /css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34072 - "GET /js/app.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34072 - "POST /api/upload HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34072 - "POST /api/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34072 - "POST /api/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34072 - "POST /api/preview HTTP/1.1" 200 OK

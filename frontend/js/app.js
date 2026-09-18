@@ -7,6 +7,22 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentPreviewData = null;
     let currentViewMode = 'processed';
 
+    // API Base URL config (stored in localStorage or empty for relative server)
+    const apiBaseUrlInput = document.getElementById('apiBaseUrlInput');
+    let apiBaseUrl = localStorage.getItem('STEREO3D_API_BASE_URL') || '';
+    if (apiBaseUrlInput) {
+        apiBaseUrlInput.value = apiBaseUrl;
+        apiBaseUrlInput.addEventListener('change', () => {
+            apiBaseUrl = apiBaseUrlInput.value.trim().replace(/\/+$/, '');
+            localStorage.setItem('STEREO3D_API_BASE_URL', apiBaseUrl);
+        });
+    }
+
+    function getApiUrl(path) {
+        if (!path.startsWith('/')) path = '/' + path;
+        return apiBaseUrl ? `${apiBaseUrl}${path}` : path;
+    }
+
     // DEPTH CURVE STATE: array of [x, y] coordinates in [0..1] range
     let depthCurvePoints = [
         [0.0, 0.0],
@@ -218,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append('file', file);
 
         try {
-            const resp = await fetch('/api/upload', {
+            const resp = await fetch(getApiUrl('/api/upload'), {
                 method: 'POST',
                 body: formData
             });
@@ -251,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Use preview endpoint with dummy call to get metadata or probe
         // Here we extract frame at 0.0 to verify and set duration
         try {
-            const resp = await fetch('/api/preview', {
+            const resp = await fetch(getApiUrl('/api/preview'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -319,7 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 settings: getSettingsPayload()
             };
 
-            const resp = await fetch('/api/preview', {
+            const resp = await fetch(getApiUrl('/api/preview'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
@@ -377,7 +393,7 @@ document.addEventListener('DOMContentLoaded', () => {
         jobProgressContainer.style.display = 'flex';
 
         try {
-            const resp = await fetch('/api/jobs', {
+            const resp = await fetch(getApiUrl('/api/jobs'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -410,7 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         jobPollInterval = setInterval(async () => {
             try {
-                const resp = await fetch(`/api/jobs/${jobId}`);
+                const resp = await fetch(getApiUrl(`/api/jobs/${jobId}`));
                 if (!resp.ok) return;
 
                 const job = await resp.json();
@@ -455,7 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setGlobalStatus('Procesamiento Completado', 'ready');
         jobProgressContainer.style.display = 'none';
         downloadSection.style.display = 'block';
-        btnDownloadResult.href = `/api/jobs/${job.job_id}/result`;
+        btnDownloadResult.href = getApiUrl(`/api/jobs/${job.job_id}/result`);
         btnProcessFullVideo.disabled = false;
     }
 
@@ -476,7 +492,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!currentJobId) return;
 
         try {
-            await fetch(`/api/jobs/${currentJobId}/cancel`, { method: 'POST' });
+            await fetch(getApiUrl(`/api/jobs/${currentJobId}/cancel`), { method: 'POST' });
             setGlobalStatus('Cancelando...', 'processing');
         } catch (e) {
             console.error('Error cancelling job:', e);

@@ -66,6 +66,22 @@ body {
     margin-left: 6px;
 }
 
+.header-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.api-url-config input {
+    background-color: var(--card-bg);
+    border: 1px solid var(--panel-border);
+    color: var(--text-light);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    width: 260px;
+}
+
 .status-indicator {
     font-size: 13px;
     padding: 4px 10px;
