@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma Profesional Conversión Vídeo 2D a 3D Estereoscópico</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="app-header">
+        <div class="logo-container">
+            <div class="logo-icon">3D</div>
+            <h1>Stereo3D Studio <span class="badge">PRO</span></h1>
+        </div>
+        <div class="header-status">
+            <span id="globalStatus" class="status-indicator ready">Listo</span>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <!-- LEFT PANEL: VIDEO SOURCE & MEDIA INFO -->
+        <aside class="panel left-panel">
+            <div class="panel-header">
+                <h2>1. Vídeo de Origen</h2>
+            </div>
+
+            <div class="upload-zone" id="uploadZone">
+                <input type="file" id="videoFileInput" accept="video/mp4,video/mov,video/avi,video/mkv,video/webm" hidden>
+                <div class="upload-icon">📁</div>
+                <p><strong>Haz clic o arrastra un vídeo 2D</strong></p>
+                <p class="upload-hint">MP4, MOV, AVI, MKV, WebM (Máx 500 MB)</p>
+            </div>
+
+            <div class="source-info-card" id="sourceInfoCard" style="display: none;">
+                <h3>Información del Vídeo</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="label">Archivo:</span>
+                        <span class="value" id="infoFilename">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Duración:</span>
+                        <span class="value" id="infoDuration">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Resolución:</span>
+                        <span class="value" id="infoResolution">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">FPS:</span>
+                        <span class="value" id="infoFps">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Total Fotogramas:</span>
+                        <span class="value" id="infoTotalFrames">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Audio:</span>
+                        <span class="value" id="infoAudio">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GLASSES / ANAGLYPH INSTRUCTIONS -->
+            <div class="glasses-info-box">
+                <h4>👓 Modo Gafas Estereoscópicas</h4>
+                <p>Para visualizar formatos Anaglifos (Rojo/Cian, Rojo/Verde, Rojo/Azul), utiliza gafas 3D con filtro correspondiente. Utiliza el control de <strong>Invertir Ojos</strong> si experimentas inversión de profundidad.</p>
+            </div>
+        </aside>
+
+        <!-- CENTER PANEL: PREVIEW & COMPARISON -->
+        <main class="panel center-panel">
+            <div class="panel-header">
+                <h2>2. Vista Previa y Comparación</h2>
+                <div class="view-mode-selector">
+                    <button class="btn-mode active" data-mode="processed">3D Result</button>
+                    <button class="btn-mode" data-mode="depth">Mapa Profundidad</button>
+                    <button class="btn-mode" data-mode="split">Split View</button>
+                    <button class="btn-mode" data-mode="lr">Left / Right</button>
+                </div>
+            </div>
+
+            <div class="preview-viewport" id="previewViewport">
+                <div class="placeholder-msg" id="placeholderMsg">
+                    <p>Sube un vídeo y pulsa "Generar Vista Previa" para previsualizar los ajustes de profundidad en tiempo real.</p>
+                </div>
+
+                <!-- SINGLE VIEW DISPLAY -->
+                <div class="preview-image-container" id="singleViewContainer" style="display: none;">
+                    <img id="mainPreviewImg" src="" alt="3D Preview">
+                </div>
+
+                <!-- SPLIT COMPARISON VIEW -->
+                <div class="split-view-container" id="splitViewContainer" style="display: none;">
+                    <div class="split-img-layer original-layer">
+                        <img id="splitOriginalImg" src="" alt="Original">
+                        <span class="split-label">ORIGINAL 2D</span>
+                    </div>
+                    <div class="split-img-layer processed-layer" id="splitProcessedLayer">
+                        <img id="splitProcessedImg" src="" alt="Processed 3D">
+                        <span class="split-label">RESULTADO 3D</span>
+                    </div>
+                    <div class="split-handle" id="splitHandle">
+                        <div class="split-line"></div>
+                        <div class="split-button">↔</div>
+                    </div>
+                </div>
+
+                <!-- LEFT / RIGHT DUAL DISPLAY -->
+                <div class="dual-view-container" id="dualViewContainer" style="display: none;">
+                    <div class="dual-box">
+                        <img id="leftEyeImg" src="" alt="Left Eye">
+                        <span>LEFT EYE</span>
+                    </div>
+                    <div class="dual-box">
+                        <img id="rightEyeImg" src="" alt="Right Eye">
+                        <span>RIGHT EYE</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="preview-controls-bar">
+                <div class="timestamp-picker">
+                    <label for="previewTimestamp">Tiempo Vista Previa:</label>
+                    <input type="range" id="previewTimestamp" min="0" max="100" value="0" step="0.1">
+                    <span id="timestampVal">0.0s</span>
+                </div>
+                <button class="btn btn-secondary" id="btnGeneratePreview" disabled>🔄 Generar Vista Previa</button>
+            </div>
+        </main>
+
+        <!-- RIGHT PANEL: TABBED CONFIGURATION & JOB PROCESSING -->
+        <aside class="panel right-panel">
+            <div class="panel-header">
+                <h2>3. Configuración del Pipeline</h2>
+            </div>
+
+            <nav class="config-tabs">
+                <button class="tab-btn active" data-tab="tabDepth">Profundidad</button>
+                <button class="tab-btn" data-tab="tabStereo">Estéreo</button>
+                <button class="tab-btn" data-tab="tabOutput">Salida 3D</button>
+                <button class="tab-btn" data-tab="tabAdvanced">Avanzado</button>
+            </nav>
+
+            <div class="tab-content">
+                <!-- TAB: DEPTH ENGINE -->
+                <div class="tab-pane active" id="tabDepth">
+                    <div class="form-group">
+                        <label for="depthMethod">Método de Estimación:</label>
+                        <select id="depthMethod">
+                            <option value="Automatic">Automatic (Procesamiento Tradicional CV)</option>
+                            <option value="Artistic">Artistic (Geometría Matemática)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="artisticTypeGroup" style="display: none;">
+                        <label for="artisticType">Modo Artístico:</label>
+                        <select id="artisticType">
+                            <option value="radial_center_out">Radial (Centro Hacia Fuera)</option>
+                            <option value="radial_center_in">Radial (Centro Hacia Dentro)</option>
+                            <option value="gradient_vertical">Gradiente Vertical</option>
+                            <option value="gradient_horizontal">Gradiente Horizontal</option>
+                            <option value="uniform">Profundidad Uniforme</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label>Intensidad 3D:</label>
+                            <span id="valIntensity">50</span>
+                        </div>
+                        <input type="range" id="sliderIntensity" min="0" max="100" value="50">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label>Profundidad Hacia Dentro (In):</label>
+                            <span id="valDepthIn">50</span>
+                        </div>
+                        <input type="range" id="sliderDepthIn" min="0" max="100" value="50">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label>Profundidad Hacia Fuera (Out):</label>
+                            <span id="valDepthOut">50</span>
+                        </div>
+                        <input type="range" id="sliderDepthOut" min="0" max="100" value="50">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label>Suavizado Espacial:</label>
+                            <span id="valSmoothing">30</span>
+                        </div>
+                        <input type="range" id="sliderSmoothing" min="0" max="100" value="30">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label>Estabilidad Temporal (Anti-Flicker):</label>
+                            <span id="valTemporal">50</span>
+                        </div>
+                        <input type="range" id="sliderTemporal" min="0" max="100" value="50">
+                    </div>
+
+                    <!-- DEPTH CURVE CANVAS VISUALIZER -->
+                    <div class="depth-curve-box">
+                        <label>Curva de Profundidad Personalizada:</label>
+                        <canvas id="depthCurveCanvas" width="280" height="120"></canvas>
+                        <p class="curve-hint">Haz clic en la gráfica para añadir o ajustar puntos de la curva.</p>
+                        <button class="btn-sm" id="btnResetCurve">Restablecer Curva</button>
+                    </div>
+                </div>
+
+                <!-- TAB: STEREO ENGINE -->
+                <div class="tab-pane" id="tabStereo">
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label>Separación de Ojos (Interocular):</label>
+                            <span id="valEyeSep">30</span>
+                        </div>
+                        <input type="range" id="sliderEyeSep" min="0" max="100" value="30">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label>Desplazamiento Horizontal (Shift):</label>
+                            <span id="valHShift">0</span>
+                        </div>
+                        <input type="range" id="sliderHShift" min="-100" max="100" value="0">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label>Fuerza Estereoscópica:</label>
+                            <span id="valDepthStrength">50</span>
+                        </div>
+                        <input type="range" id="sliderDepthStrength" min="0" max="100" value="50">
+                    </div>
+
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="checkInvertEyes">
+                        <label for="checkInvertEyes">Invertir Ojos (Left ↔ Right)</label>
+                    </div>
+
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="checkInvertDepth">
+                        <label for="checkInvertDepth">Invertir Mapa de Profundidad</label>
+                    </div>
+                </div>
+
+                <!-- TAB: OUTPUT FORMATS -->
+                <div class="tab-pane" id="tabOutput">
+                    <div class="form-group">
+                        <label for="stereoFormat">Formato 3D de Salida:</label>
+                        <select id="stereoFormat">
+                            <option value="anaglyph_red_cyan">Anaglifo Rojo / Cian (Predeterminado)</option>
+                            <option value="anaglyph_red_green">Anaglifo Rojo / Verde</option>
+                            <option value="anaglyph_red_blue">Anaglifo Rojo / Azul</option>
+                            <option value="side_by_side_full">Side-by-Side Complete (SBS Full)</option>
+                            <option value="side_by_side_half">Side-by-Side Half (SBS Half 3D TV)</option>
+                            <option value="top_bottom">Top / Bottom (Arriba / Abajo)</option>
+                            <option value="left_eye">Solo Ojo Izquierdo (Left Eye)</option>
+                            <option value="right_eye">Solo Ojo Derecho (Right Eye)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="outputQuality">Calidad de Codificación:</label>
+                        <select id="outputQuality">
+                            <option value="medium">Media (Balanceada)</option>
+                            <option value="high">Alta (Mayor precisión visual)</option>
+                            <option value="low">Rápida (Procesamiento veloz)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="checkKeepAudio" checked>
+                        <label for="checkKeepAudio">Conservar Sincronización de Audio Original</label>
+                    </div>
+                </div>
+
+                <!-- TAB: ADVANCED WEIGHTS -->
+                <div class="tab-pane" id="tabAdvanced">
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label>Peso Detección de Bordes (Sobel):</label>
+                            <span id="valEdgeWeight">0.3</span>
+                        </div>
+                        <input type="range" id="sliderEdgeWeight" min="0" max="1" step="0.05" value="0.3">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label>Peso Estimación de Movimiento (Optical Flow):</label>
+                            <span id="valMotionWeight">0.3</span>
+                        </div>
+                        <input type="range" id="sliderMotionWeight" min="0" max="1" step="0.05" value="0.3">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label>Peso Densidad de Textura:</label>
+                            <span id="valTextureWeight">0.2</span>
+                        </div>
+                        <input type="range" id="sliderTextureWeight" min="0" max="1" step="0.05" value="0.2">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label>Peso Contraste de Luminancia:</label>
+                            <span id="valContrastWeight">0.2</span>
+                        </div>
+                        <input type="range" id="sliderContrastWeight" min="0" max="1" step="0.05" value="0.2">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="selectHoleFilling">Método Relleno de Oclusiones (Hole Filling):</label>
+                        <select id="selectHoleFilling">
+                            <option value="horizontal_propagation">Propagación Horizontal Vecina (Rápida)</option>
+                            <option value="nearest">Vecino Más Cercano</option>
+                            <option value="inpaint">Inpainting Inpainting OpenCV Telea</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACTION & JOB PROCESSING SECTION -->
+            <div class="job-action-section">
+                <button class="btn btn-primary btn-large" id="btnProcessFullVideo" disabled>🚀 PROCESAR VÍDEO COMPLETO</button>
+
+                <div class="job-progress-container" id="jobProgressContainer" style="display: none;">
+                    <div class="progress-bar-outer">
+                        <div class="progress-bar-inner" id="progressBarInner" style="width: 0%;"></div>
+                    </div>
+                    <div class="progress-info-row">
+                        <span id="progressPercent">0%</span>
+                        <span id="progressFrames">0 / 0 Frames</span>
+                    </div>
+                    <div class="progress-metrics-row">
+                        <span id="progressFps">0 FPS</span>
+                        <span id="progressEta">ETA: --</span>
+                    </div>
+                    <button class="btn btn-danger btn-sm" id="btnCancelJob">Cancelar Trabajo</button>
+                </div>
+
+                <div class="download-section" id="downloadSection" style="display: none;">
+                    <div class="success-banner">🎉 VÍDEO 3D COMPLETADO</div>
+                    <a id="btnDownloadResult" class="btn btn-success btn-large" href="#" download>📥 DESCARGAR VÍDEO 3D PROCESADO</a>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
